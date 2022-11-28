@@ -16,7 +16,8 @@ char ** firstnumlines(FILE * inputfp, unsigned int num){
 int main() {
 	FILE * inputfp = fopen("input.txt", "r");
 
-	int num=10;
+	int num;
+	scanf("%d",&num);
 	char ** firstlines = firstnumlines(inputfp,num);
 
 	for(int i=0;i<num;i++){
