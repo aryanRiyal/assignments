@@ -12,21 +12,25 @@ char ** firstnumlines(FILE * inputfp, unsigned int num){
 		//c = fgetc(inputfp);
 
 		if(feof(inputfp)){
-				printf("\nGiven Size is Greater than the input file\n\n");
-				//break;
-				return NULL;
+			printf("\nGiven Size is Greater than the input file\n\n");
+			//break;
+			for(int i =0;i<num;i++){
+				free(headbuff[i]);
 			}
+			free(headbuff);
+
+			return NULL;
+		}
 		else{
-		
-		headbuff[i] = (char *) calloc(255, sizeof(char));
-		fgets(headbuff[i],255,inputfp);
-		//printf("%d %d\n",i,j);
-		i++;
-		j++;
+			headbuff[i] = (char *) calloc(255, sizeof(char));
+			fgets(headbuff[i],255,inputfp);
+			//printf("%d %d\n",i,j);
+			i++;
+			j++;
 		}
 		/*if(headbuff[i] != NULL){
-		printf("%s",headbuff[i]);
-	    }*/	
+		  printf("%s",headbuff[i]);
+		  }*/	
 
 		// c = getc(inputfp);
 		// i++;
@@ -36,7 +40,7 @@ char ** firstnumlines(FILE * inputfp, unsigned int num){
 		//free(headbuff[i]);
 	}
 	return headbuff;
-	
+
 }
 
 
@@ -50,8 +54,8 @@ int main() {
 
 	char ** firstlines = firstnumlines(inputfp,num);
 
-    //firstnumlines(inputfp,num);
-	
+	//firstnumlines(inputfp,num);
+
 	if(firstlines==NULL){
 		return 0;
 	}
@@ -61,10 +65,10 @@ int main() {
 			printf("%s",firstlines[i]);
 		}
 	}
-	
- 	for(int i =0;i<num;i++){
+
+	for(int i =0;i<num;i++){
 		free(firstlines[i]);
-		}
+	}
 	free(firstlines);
 
 	//printf("\n");
