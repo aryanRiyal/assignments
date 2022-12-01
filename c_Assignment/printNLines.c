@@ -10,7 +10,7 @@ char ** firstnumlines(FILE * inputfp, unsigned int num){
 	while(i<num ){
 		//c = fgetc(inputfp);
 		if(feof(inputfp)){
-				printf("EOF REACHED\n");
+				printf("EOF REACHED\n\n");
 				break;
 			}
 		headbuff[i] = (char *) calloc(255, sizeof(char));
