@@ -7,8 +7,12 @@ char ** firstnumlines(FILE * inputfp, unsigned int num){
 	char ** headbuff = (char **) calloc(num, sizeof(char *));
 	int i=0;
 	//char c;
-	while(!(feof(inputfp)) || i<num ){
+	while(i<num ){
 		//c = fgetc(inputfp);
+		if(feof(inputfp)){
+				printf("EOF REACHED\n");
+				break;
+			}
 		headbuff[i] = (char *) calloc(255, sizeof(char));
 		fgets(headbuff[i],255,inputfp);
 		/*if(headbuff[i] != NULL){
