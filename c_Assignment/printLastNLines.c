@@ -1,26 +1,143 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-char ** lastnumlines(FILE * inputfp, unsigned int num)
-{
-  char ** tailbuf = calloc(num, sizeof(char *));
-  
-  while(){
+// Using Linked List
 
-  }
+// Contraints 
+// 0<num<100
+// 0<SIZE<256
+// No Memory Leak
 
-  return tailbuf;
+#define SIZE 256
+
+typedef struct node{
+	char val[SIZE];
+	struct node *next;
+} node_t;
+
+//print
+void print_list(node_t * head){
+	node_t *current = head;
+	while (current != NULL){
+		printf("%s", current->val);
+		current = current->next;
+	}
 }
 
-int main()
-{
-   FILE * fp = fopen("input.txt", "r");
-   char ** lastlines = lastnumlines(fp, 10);
-   for (int i = 0; i < 10; i++) {
-        if (lastlines[i] != NULL) {
-            printf("%s", lastlines[i]);
-        }
-   }
-   free(lastlines);
-   fclose(fp);
+//add
+void push(node_t * head, char val[]){
+	node_t *current = head;
+	while( current->next != NULL) {
+		current = current->next;
+	}
+	current->next = (node_t *) calloc(1, sizeof(node_t));
+	strcpy(current->next->val, val);
+	current->next->next = NULL;
+}
+
+//remove
+int pop(node_t ** head){
+	node_t *next_node = NULL;
+
+	if(*head == NULL){
+		return 1;
+	}
+
+	next_node = (*head)->next;
+	free(*head);
+
+	*head = next_node;
+	return 0;
+}
+
+//removing the last node
+int remove_last(node_t * head){
+	if(head->next == NULL){
+		free(head);
+		return 0;
+	}
+	node_t * current = head;
+	while(current->next->next != NULL){
+		current = current->next;
+	}
+	free(current->next);
+	current->next = NULL;
+	return 0;
+}
+
+
+void lastnumlines(FILE * inputfp, int num){
+	int i=0;
+	int count=0;
+
+	node_t *head = NULL;
+
+	head = (node_t *) calloc(1, sizeof(node_t));
+
+	// printf("\n");
+
+	// Reading till EOF
+	while(!feof(inputfp)){
+
+		if(count>=num){
+			pop(&head);
+		}
+		char temp[SIZE];
+		fgets( temp, SIZE, inputfp);
+		push(head,temp);
+		count++;
+	}
+	// printf("\n");
+
+	// Because feof iterates 1 extra time
+	count--;
+	remove_last(head);
+
+	// printf("\n Count=%d Num=%d \n",count, num);
+
+	// printf("\n OUTPUT \n");
+	// Only printing if given input is less than the total size of the file
+	// printf("%d %d\n", count, num);
+	
+	if(num <= count)
+	{
+		print_list(head);
+		// printf("\n");
+	}
+    else
+	{
+		printf("Given input is greater than the total number of lines in the Input File\n");
+	}
+
+	for(int i=0;i<=count;i++){
+		pop(&head);
+	}
+}
+
+
+int main(void) {
+	FILE * inputfp = fopen("input.txt", "r");
+
+	int num;
+	scanf("%d",&num);
+
+	if(num>100 || num<=0){
+		printf("Input should be lesser than 100 or greater than 0\n");
+		// printf("\n");
+		fclose(inputfp);
+		return 1;
+	}
+
+
+	if(inputfp != NULL){
+		lastnumlines(inputfp,num);
+		fclose(inputfp);
+		return 0;
+	}
+	else{
+		printf("File Input is NULL\n");
+		fclose(inputfp);
+		return 1;
+	}
 }
