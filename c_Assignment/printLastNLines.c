@@ -99,13 +99,14 @@ void lastnumlines(FILE * inputfp, int num){
 	// printf("\n OUTPUT \n");
 	// Only printing if given input is less than the total size of the file
 	// printf("%d %d\n", count, num);
-	
-	if(num <= count)
-	{
+
+	// print_list(head);
+
+	if(num <= count){
 		print_list(head);
 		// printf("\n");
 	}
-    else
+	else
 	{
 		printf("Given input is greater than the total number of lines in the Input File\n");
 	}
@@ -128,7 +129,6 @@ int main(void) {
 		fclose(inputfp);
 		return 1;
 	}
-
 
 	if(inputfp != NULL){
 		lastnumlines(inputfp,num);
