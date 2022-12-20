@@ -15,31 +15,30 @@ char ** lastnumlines(FILE * inputfp, int num){
 		temp[i] = (char *) calloc(SIZE, sizeof(char));
 	}
 
-	int i=0,count = 0;
+	int count = 0;
 
 	while(!feof(inputfp)){
-		fgets(temp[i%num],SIZE,inputfp);
+		fgets(temp[count%num],SIZE,inputfp);
 		// printf("%d -> %d %s", count, i%num, temp[i%num]);
 		count++;
-		i++;
 	}
 
-	i--;
+	// because feof iterates one extra time
 	count--;
 
-	int l=i%num,a=0;
+	int l=count%num, i=0;
 	// printf("%d %d %d\n",l,i,num);
 
-	if(num<=count){
-		while(a<num){
+	if(num <= count){
+		while(i<num){
 			// printf("%d %s",l,temp[l]);
 
-			tailbuff[a] = (char *) calloc(SIZE, sizeof(char));
-			strcpy(tailbuff[a],temp[l]);
+			tailbuff[i] = (char *) calloc(SIZE, sizeof(char));
+			strcpy(tailbuff[i],temp[l]);
 
 			l++;
 			l=l%num;
-			a++;
+			i++;
 		}
 	}
 	else{
@@ -62,6 +61,8 @@ int main(int argc, char *argv[]) {
 
 	int num=0;
 
+	// scanf("%d",&num);
+	
 	if(argc<=1){
 		num = 10;
 	}
@@ -82,7 +83,8 @@ int main(int argc, char *argv[]) {
 
 		for(int i=0;i<num;i++){
 			if(printtail[i]!=NULL){
-				printf("%d %p --> %s",i+1,printtail[i],printtail[i]);
+				// printf("%d %p --> %s",i+1,printtail[i],printtail[i]);
+				printf("%s",printtail[i]);
 			}
 			else
 				break;
