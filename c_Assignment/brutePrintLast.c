@@ -4,51 +4,70 @@
 
 // tailbuff Brute Force
 
-#define SIZE 256
+#define SIZE 256 
 
 char ** lastnumlines(FILE * inputfp, int num){
 
 	char ** tailbuff = (char **) calloc(num, sizeof(char *));
-	char ** temp = (char **) calloc(100, sizeof(char *));	
+	char ** temp = (char **) calloc(num, sizeof(char *));
+
+	for(int i=0;i<num;i++){
+		temp[i] = (char *) calloc(SIZE, sizeof(char));
+	}
 
 	int i=0,count = 0;
+
 	while(!feof(inputfp)){
-		temp[i]= (char *) calloc(SIZE, sizeof(char));
-		fgets(temp[i],SIZE,inputfp);
+		fgets(temp[i%num],SIZE,inputfp);
+		// printf("%d -> %d %s", count, i%num, temp[i%num]);
 		count++;
 		i++;
 	}
 
+	i--;
 	count--;
 
+	int l=i%num,a=0;
+	// printf("%d %d %d\n",l,i,num);
+
 	if(num<=count){
-		int j=count-num,k=0;
-		while(j<count){
-			tailbuff[k]=(char *) calloc(SIZE, sizeof(char));
-			strcpy(tailbuff[k],temp[j]);
-			j++;
-			k++;
+		while(a<num){
+			// printf("%d %s",l,temp[l]);
+
+			tailbuff[a] = (char *) calloc(SIZE, sizeof(char));
+			strcpy(tailbuff[a],temp[l]);
+
+			l++;
+			l=l%num;
+			a++;
 		}
 	}
 	else{
 		printf("Given Input is greater than the total number of lines in the input file.\n");
 	}
-	
-	for(int i=0;i<=count;i++){
-		free(temp[i]);
-	}
+
+	   for(int i=0;i<num;i++){
+	   free(temp[i]);
+	   }
+
 	free(temp);
-	
+
 	return tailbuff;
 }
 
 
 
-int main(void) {
+int main(int argc, char *argv[]) {
 	FILE * inputfp = fopen("input.txt", "r");
 
-	int num;
-	scanf("%d",&num);
+	int num=0;
+
+	if(argc<=1){
+		num = 10;
+	}
+	else {
+		num = atoi(argv[1]);
+	}
 
 	if(num>100 || num<=0){
 		printf("Input is greater than 100 or lesser than 0\n");
@@ -63,12 +82,12 @@ int main(void) {
 
 		for(int i=0;i<num;i++){
 			if(printtail[i]!=NULL){
-				printf("%d %p --> %s",i,printtail[i],printtail[i]);
+				printf("%d %p --> %s",i+1,printtail[i],printtail[i]);
 			}
 			else
 				break;
 		}
-		
+
 		for(int i=0;i<num;i++){
 			free(printtail[i]);
 		}

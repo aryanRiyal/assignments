@@ -68,7 +68,6 @@ int remove_last(node_t * head){
 
 
 void lastnumlines(FILE * inputfp, int num){
-	int i=0;
 	int count=0;
 
 	node_t *head = NULL;
@@ -117,11 +116,17 @@ void lastnumlines(FILE * inputfp, int num){
 }
 
 
-int main(void) {
+int main(int argc, char *argv[]) {
 	FILE * inputfp = fopen("input.txt", "r");
 
-	int num;
-	scanf("%d",&num);
+	int num=0;
+
+	if(argc<=1){
+		num = 10;
+	}
+	else {
+		num = atoi(argv[1]);
+	}
 
 	if(num>100 || num<=0){
 		printf("Input should be lesser than 100 or greater than 0\n");
