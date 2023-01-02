@@ -8,6 +8,7 @@
 #include	<unistd.h>
 #include	<sys/un.h>
 #include	<time.h>
+#include	<errno.h>
 
 #define MAXLINE	4096
 #define MAXSOCKADDR	128
@@ -59,8 +60,8 @@ int Listen(int sockfd, int backlog){
 int Accept(int sockfd, SA *addr, socklen_t *addrlen){
 	int n;
 	if((n= accept(sockfd, addr, addrlen))<0){
-			perror("[-]accept() Error");
-			exit(1);
+		perror("[-]accept() Error");
+		exit(1);
 	}
 	printf("[+]Client Connected\n");
 	return (n);
@@ -72,7 +73,7 @@ ssize_t Write(int sockfd, void *buff, size_t count){
 		perror("[-]write() Error");
 		exit(1);
 	}
-	printf("[+]Write implemented\n");
+	// printf("[+]Write implemented\n");
 	return (n);
 }
 

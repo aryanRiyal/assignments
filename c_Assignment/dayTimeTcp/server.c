@@ -2,7 +2,7 @@
 
 int main( int argc, char **argv){
 
-	int n_client = 0;
+	int n_client = 0,count = 0;
 	int serverSock, clientSock;
 	serverSock = Socket(AF_INET, SOCK_STREAM, 0);
 	struct sockaddr_in serverAddress;
@@ -19,7 +19,7 @@ int main( int argc, char **argv){
 	Listen(serverSock, BACKLOG);
 	printf("\n");
 
-	int i=1;
+	int i=1,j;
 	while(i){
 		clientSock = Accept(serverSock, (SA *) NULL, NULL);
 		n_client++;
@@ -27,7 +27,13 @@ int main( int argc, char **argv){
 
 		printf("Client %d is requesting for Day and Time Information.\n", n_client);
 		snprintf(buff, sizeof(buff), "%.24s\r\n", ctime(&ticks));
-		Write(clientSock, buff, strlen(buff));
+
+		count = strlen(buff);
+		printf("%d\n",count);
+
+		for(j=0;j<count;j++){
+		Write(clientSock, buff+j, 1);
+		}
 
 		close(clientSock);
 		printf("[+]Client Disconnected\n\n");

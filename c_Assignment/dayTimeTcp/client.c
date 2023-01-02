@@ -11,7 +11,7 @@ int main( int argc, char **argv){
 	printf("IP Address: %s\n",ip);
 	
 
-	int sockfd;
+	int sockfd,count=0,n;
 	sockfd = Socket(AF_INET, SOCK_STREAM, 0);
 	char response[MAXLINE+1];
 
@@ -29,8 +29,19 @@ int main( int argc, char **argv){
 	Connect(sockfd, (SA *)&serverAddress, sizeof(serverAddress));
 
 	/*
-	int n;
+	Q 1.3
+	if(connect(sockfd, (SA *)&serverAddress, sizeof(serverAddress))<0){
+		printf("[-]Connection Failed\nError No: %d, Error: %s\n", errno, strerror(errno));
+		exit(1);
+	}
+	*/
+	
 	while((n = read(sockfd, response, MAXLINE)) > 0) {
+		/*
+		Q 1.4
+		*/
+		count++;
+		// printf("\n%d ",n);
 		response[n] = 0;
 		if(fputs(response,stdout) == EOF){
 			perror("[-]fputs() Error");
@@ -41,14 +52,16 @@ int main( int argc, char **argv){
 		perror("[-]read() Error");
 		exit(1);
 	}
-	*/
 
+	/*
 	Read(sockfd, response, MAXLINE);
 
 	if(fputs(response,stdout)==EOF){
 		perror("[-]fputs() Error");
 		exit(1);
 	}
+	*/
+	printf("\nCount = %d\n",count);
 
 	close(sockfd);
 	printf("[+]Disconnected from the server.\n");
