@@ -17,6 +17,7 @@
 
 #define SA struct sockaddr
 
+/* socket() */
 int Socket(int family, int type, int protocol){
 	int n;
 	if((n= socket(family, type, protocol)) < 0){
@@ -27,6 +28,7 @@ int Socket(int family, int type, int protocol){
 	return (n);
 }
 
+/* connect() */
 int Connect(int sockfd, SA *addr, socklen_t addrlen){
 	int n;
 	if((n= connect(sockfd, addr, addrlen))<0){
@@ -37,6 +39,7 @@ int Connect(int sockfd, SA *addr, socklen_t addrlen){
 	return (n);
 }
 
+/* bind() */
 int Bind(int sockfd, SA *addr, socklen_t addrlen){
 	int n;
 	if((n= bind(sockfd,addr, addrlen))<0){
@@ -47,16 +50,18 @@ int Bind(int sockfd, SA *addr, socklen_t addrlen){
 	return (n);
 }
 
+/* listen() */
 int Listen(int sockfd, int backlog){
 	int n;
 	if((n= listen(sockfd, backlog))<0){
 		perror("[-]listen() Error");
 		exit(1);
 	}
-	printf("[+]Listening for the Client...\n");
+	printf("[+]Listening for the Client...\n\n");
 	return (n);
 }
 
+/* accept() */
 int Accept(int sockfd, SA *addr, socklen_t *addrlen){
 	int n;
 	if((n= accept(sockfd, addr, addrlen))<0){
@@ -67,6 +72,7 @@ int Accept(int sockfd, SA *addr, socklen_t *addrlen){
 	return (n);
 }
 
+/* write() */
 ssize_t Write(int sockfd, void *buff, size_t count){
 	ssize_t n;
 	if((n= write(sockfd, buff, count))<0){
@@ -77,6 +83,7 @@ ssize_t Write(int sockfd, void *buff, size_t count){
 	return (n);
 }
 
+/* read() */
 ssize_t Read(int sockfd, void *buff, size_t count){
 	ssize_t n;
 	if((n= read(sockfd, buff, count))<0){
