@@ -35,7 +35,8 @@ int Connect(int sockfd, SA *addr, socklen_t addrlen){
 		perror("[-]connect() Error");
 		exit(1);
 	}
-	printf("[+]Connection Established\n\n");
+	printf("[+]Connection Established\n");
+	printf("\n");
 	return (n);
 }
 

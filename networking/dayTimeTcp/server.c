@@ -1,5 +1,8 @@
 #include "header.h"
 
+// lsof -i :port
+// kill -9 pid
+
 int main( int argc, char **argv){
 	int n_client = 0,count = 0;
 	int serverSock, clientSock;
@@ -33,5 +36,6 @@ int main( int argc, char **argv){
 		printf("[+]Client Disconnected\n\n");
 	}
 
+	close(serverSock);
 	return 0;
 }
