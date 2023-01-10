@@ -107,7 +107,9 @@ void lastnumlines(FILE * inputfp, int num){
 	}
 	else
 	{
-		printf("Given input is greater than the total number of lines in the Input File\n");
+		print_list(head);
+
+		printf("\nGiven input is greater than the total number of lines in the Input File\n");
 	}
 
 	for(int i=0;i<=count;i++){

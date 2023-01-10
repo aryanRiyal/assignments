@@ -43,8 +43,12 @@ int main(int argc, char *argv[]) {
 	FILE * inputfp = fopen("input.txt","r");
 
 	int num=0;
-
-	scanf("%d",&num);
+	if(argc<2){
+		num=10;
+	}
+	else{
+		num = atoi(argv[1]);
+	}
 
 	if(num>100 || num<=0){
 		printf("Input should be greater than 0 and less than 100\n");

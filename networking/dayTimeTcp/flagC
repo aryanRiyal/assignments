@@ -1,1 +1,1 @@
--o runC -Wall -Werror -g
+-o runC -Wall -Werror -Wextra -g

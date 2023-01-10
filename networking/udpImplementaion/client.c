@@ -1,4 +1,4 @@
-#include "header.h"
+#include "../header.h"
 
 int main(int argc, char **argv){
 
@@ -25,4 +25,4 @@ int main(int argc, char **argv){
 	printf("[+]Data Sent: %s\n", buffer);
 
 	return 0;
-	}
+}

@@ -1,4 +1,4 @@
-#include "header.h"
+#include "../header.h"
 
 int main( int argc, char **argv){
 	if(argc != 2){
@@ -28,7 +28,7 @@ int main( int argc, char **argv){
 		exit(1);
 	}
 	*/
-	while((n = read(sockfd, response, MAXLINE)) > 0) {
+	while((n = Read(sockfd, response, MAXLINE)) > 0) {
 		// Q 1.4
 		count++;
 		response[n] = 0;

@@ -1,9 +1,9 @@
-#include "header.h"
+#include "../header.h"
 
 // lsof -i :port
 // kill -9 pid
 
-int main( int argc, char **argv){
+int main(void){
 	int n_client = 0,count = 0;
 	int serverSock, clientSock;
 	serverSock = Socket(AF_INET, SOCK_STREAM, 0);
@@ -17,9 +17,8 @@ int main( int argc, char **argv){
 	serverAddress.sin_port = htons(9999);
 	Bind( serverSock, (SA *)&serverAddress, sizeof(serverAddress));
 	Listen(serverSock, BACKLOG);
-	printf("\n");
 
-	int i=1,j;
+	int i=1;
 	while(i){
 		clientSock = Accept(serverSock, (SA *) NULL, NULL);
 		n_client++;
@@ -28,10 +27,11 @@ int main( int argc, char **argv){
 		snprintf(buff, sizeof(buff), "%.24s\r\n", ctime(&ticks));
 		count = strlen(buff);
 		printf("%d\n",count);
-		// Q 1.5
-		for(j=0;j<count;j++){
-		Write(clientSock, buff+j, 1);
-		}
+		/* Q 1.5
+		for(int j=0;j<count;j++){
+			Write(clientSock, buff+j, 1);
+		} */
+		Write(clientSock, buff, MAXLINE);
 		close(clientSock);
 		printf("[+]Client Disconnected\n\n");
 	}
