@@ -80,9 +80,11 @@ ssize_t Write(int sockfd, void *buff, size_t count){
 		perror("[-]write() Error");
 		exit(1);
 	}
+	/*
 	if(n!=0){
 	printf("[+]Write implemented\n");
 	}
+	*/
 	return (n);
 }
 
@@ -93,9 +95,11 @@ ssize_t Read(int sockfd, void *buff, size_t count){
 		perror("[-]read() Error");
 		exit(1);
 	}
+	/*
 	if(n!=0){
 	printf("[+]Read Successful\n");
 	}
+	*/
 	return (n);
 }
 
