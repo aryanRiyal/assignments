@@ -2,8 +2,24 @@
 
 int main(void){
 	int n_client = 0;
+	const int opt = 1;
 	int serverSock, clientSock;
 	serverSock = Socket(AF_INET, SOCK_STREAM, 0);
+
+	// Forcefully attaching socket to the port 54321 or Reused Port and address (optional)
+	/*
+	   if (setsockopt( serverSock, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) < 0){
+	   perror("setsockopt(SO_REUSEADDR) Error");
+	   close(serverSock);
+	   exit(EXIT_FAILURE);
+	   }
+	   */
+	if(setsockopt( serverSock, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, (char *)&opt, sizeof(opt)) < 0 ){
+		perror("setsockopt(SO_REUSEADDR) Error\n");
+		close(serverSock);
+		exit(EXIT_FAILURE);
+	}
+
 	struct sockaddr_in serverAddress;
 	char buff[MAXLINE];
 	time_t ticks;
@@ -12,54 +28,33 @@ int main(void){
 	serverAddress.sin_family = AF_INET;
 	serverAddress.sin_addr.s_addr = htonl(INADDR_ANY); 
 	serverAddress.sin_port = htons(9999);
+
 	Bind( serverSock, (SA *)&serverAddress, sizeof(serverAddress));
 	Listen(serverSock, BACKLOG);
 
-	int i=1,f=1;
-	unsigned int j;
+	const int i=1;
 	while(i){ 
-
-		if(j){
-			clientSock = Accept(serverSock, (SA *) NULL, NULL);
-			n_client++;
-			time(&ticks);
-			printf("Client %d connected to the Server on: %.24s\r\n\n", n_client,ctime(&ticks));
-
-			while(1){
-				bzero(buff, sizeof(buff));
-				Read( clientSock, buff, MAXLINE);
-				printf("Client: %s",buff);
-				if(!strncmp("q!", buff, 2)){
-					f=1;
-					break;
-				}
-
-				bzero( buff, sizeof(buff));
-				printf("Server: ");
-				fgets( buff, sizeof(buff), stdin);
-				Write( clientSock, buff, strlen(buff));
-
-				if(!strncmp("q!", buff, 2)){
-					f=0;
-					break;
-				}
+		clientSock = Accept(serverSock, (SA *) NULL, NULL);
+		n_client++;
+		time(&ticks);
+		printf("Client %d connected to the Server on: %.24s\r\n\n", n_client,ctime(&ticks));
+		while(i){
+			bzero(buff, sizeof(buff));
+			Read( clientSock, buff, MB);
+			printf("Client %d: %s", n_client, buff);
+			if(!strncmp("bye", buff, 3)){
+				break;
 			}
-
-			close(clientSock);
-			if(f)
-				printf("\n[+]Client Disconnected from the server.");
-			else
-				printf("\n[+]Client was Removed from the server.");
+			bzero( buff, sizeof(buff));
+			printf("Server: ");
+			fgets( buff, sizeof(buff), stdin);
+			Write( clientSock, buff, MB);
+			if(!strncmp("bye", buff, 3)){
+				break;
+			}
 		}
-		else {
-			break;
-		}
-		printf("\n\nEnter 0 to Exit and any other key to continue: ");
-		scanf("%d",&j);
-		printf("\n");
+		close(clientSock);
+		printf("\n[+]Client Disconnected from the server.\n\n");
 	}
-
-	close(serverSock);
-	printf("...Terminating the session wait 30 secs before running the server again...\n");
 	return 0;
 }

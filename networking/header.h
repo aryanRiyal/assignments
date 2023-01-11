@@ -11,6 +11,7 @@
 #include	<errno.h>
 
 #define MAXLINE	4096
+#define MB 1024
 #define MAXSOCKADDR	128
 #define BUFFSIZE	8192
 #define BACKLOG 10
@@ -33,7 +34,8 @@ int Connect(int sockfd, SA *addr, socklen_t addrlen){
 	int n;
 	if((n= connect(sockfd, addr, addrlen))<0){
 		perror("[-]connect() Error");
-		exit(1);
+		close(sockfd);
+		exit(EXIT_FAILURE);
 	}
 	printf("[+]Connection Established\n");
 	printf("\n");
@@ -45,7 +47,8 @@ int Bind(int sockfd, SA *addr, socklen_t addrlen){
 	int n;
 	if((n= bind(sockfd,addr, addrlen))<0){
 		perror("[-]bind() Error");
-		exit(1);
+		close(sockfd);
+		exit(EXIT_FAILURE);
 	}
 	printf("[+]Bind Successful\n");
 	return (n);
@@ -56,7 +59,8 @@ int Listen(int sockfd, int backlog){
 	int n;
 	if((n= listen(sockfd, backlog))<0){
 		perror("[-]listen() Error");
-		exit(1);
+		close(sockfd);
+		exit(EXIT_FAILURE);
 	}
 	printf("[+]Listening for the Client...\n\n");
 	return (n);
@@ -67,7 +71,8 @@ int Accept(int sockfd, SA *addr, socklen_t *addrlen){
 	int n;
 	if((n= accept(sockfd, addr, addrlen))<0){
 		perror("[-]accept() Error");
-		exit(1);
+		close(sockfd);
+		exit(EXIT_FAILURE);
 	}
 	printf("[+]Client Connected\n");
 	return (n);
@@ -78,7 +83,8 @@ ssize_t Write(int sockfd, void *buff, size_t count){
 	ssize_t n;
 	if((n= write(sockfd, buff, count))<0){
 		perror("[-]write() Error");
-		exit(1);
+		close(sockfd);
+		exit(EXIT_FAILURE);
 	}
 	/*
 	if(n!=0){
@@ -93,7 +99,8 @@ ssize_t Read(int sockfd, void *buff, size_t count){
 	ssize_t n;
 	if((n= read(sockfd, buff, count))<0){
 		perror("[-]read() Error");
-		exit(1);
+		close(sockfd);
+		exit(EXIT_FAILURE);
 	}
 	/*
 	if(n!=0){

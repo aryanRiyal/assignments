@@ -21,13 +21,12 @@ int main( int argc, char **argv){
 		exit(1);
 	}
 	Connect(sockfd, (SA *)&serverAddress, sizeof(serverAddress));
-
 	while(1) {
 		bzero( buff, sizeof(buff));
 		printf("Client: ");
 		fgets( buff, sizeof(buff), stdin);
 		Write( sockfd, buff, strlen(buff));
-		if(!strncmp("q!", buff, 2)){
+		if(!strncmp("bye", buff, 2)){
 			f=1;
 			break;
 		}
@@ -35,12 +34,11 @@ int main( int argc, char **argv){
 		bzero( buff, sizeof(buff));
 		Read( sockfd, buff, MAXLINE);
 		printf("Server: %s", buff);
-		if(!strncmp("q!", buff, 2)){
+		if(!strncmp("bye", buff, 2)){
 			f=0;
 			break;
 		}
 	}
-
 	close(sockfd);
 	if(f){
 		printf("\n[+]Disconnected from the server.\n");
