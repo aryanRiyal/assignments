@@ -26,7 +26,7 @@ int main( int argc, char **argv){
 		printf("Client: ");
 		fgets( buff, sizeof(buff), stdin);
 		Write( sockfd, buff, strlen(buff));
-		if(!strncmp("bye", buff, 2)){
+		if(!strncmp(":exit", buff, 5)){
 			f=1;
 			break;
 		}
@@ -34,7 +34,7 @@ int main( int argc, char **argv){
 		bzero( buff, sizeof(buff));
 		Read( sockfd, buff, MAXLINE);
 		printf("Server: %s", buff);
-		if(!strncmp("bye", buff, 2)){
+		if(!strncmp(":exit", buff, 5)){
 			f=0;
 			break;
 		}

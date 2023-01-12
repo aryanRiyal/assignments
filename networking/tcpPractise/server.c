@@ -40,16 +40,16 @@ int main(void){
 		printf("Client %d connected to the Server on: %.24s\r\n\n", n_client,ctime(&ticks));
 		while(i){
 			bzero(buff, sizeof(buff));
-			Read( clientSock, buff, MB);
+			Read( clientSock, buff, MAXLINE);
 			printf("Client %d: %s", n_client, buff);
-			if(!strncmp("bye", buff, 3)){
+			if(!strncmp(":exit", buff, 5)){
 				break;
 			}
 			bzero( buff, sizeof(buff));
 			printf("Server: ");
 			fgets( buff, sizeof(buff), stdin);
-			Write( clientSock, buff, MB);
-			if(!strncmp("bye", buff, 3)){
+			Write( clientSock, buff, strlen(buff));
+			if(!strncmp(":exit", buff, )){
 				break;
 			}
 		}

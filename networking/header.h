@@ -38,7 +38,6 @@ int Connect(int sockfd, SA *addr, socklen_t addrlen){
 		exit(EXIT_FAILURE);
 	}
 	printf("[+]Connection Established\n");
-	printf("\n");
 	return (n);
 }
 
@@ -87,10 +86,10 @@ ssize_t Write(int sockfd, void *buff, size_t count){
 		exit(EXIT_FAILURE);
 	}
 	/*
-	if(n!=0){
-	printf("[+]Write implemented\n");
-	}
-	*/
+	   if(n!=0){
+	   printf("[+]Write implemented\n");
+	   }
+	   */
 	return (n);
 }
 
@@ -103,10 +102,10 @@ ssize_t Read(int sockfd, void *buff, size_t count){
 		exit(EXIT_FAILURE);
 	}
 	/*
-	if(n!=0){
-	printf("[+]Read Successful\n");
-	}
-	*/
+	   if(n!=0){
+	   printf("[+]Read Successful\n");
+	   }
+	   */
 	return (n);
 }
 
