@@ -19,11 +19,9 @@ int main(void){
 		close(serverSock);
 		exit(EXIT_FAILURE);
 	}
-
 	struct sockaddr_in serverAddress;
 	char buff[MAXLINE];
 	time_t ticks;
-
 	bzero(&serverAddress, sizeof(serverAddress));
 	serverAddress.sin_family = AF_INET;
 	serverAddress.sin_addr.s_addr = htonl(INADDR_ANY); 
@@ -42,14 +40,14 @@ int main(void){
 			bzero(buff, sizeof(buff));
 			Read( clientSock, buff, MAXLINE);
 			printf("Client %d: %s", n_client, buff);
-			if(!strncmp(":exit", buff, 5)){
+			if(!strncmp("Bye!", buff, 4)){
 				break;
 			}
 			bzero( buff, sizeof(buff));
 			printf("Server: ");
 			fgets( buff, sizeof(buff), stdin);
 			Write( clientSock, buff, strlen(buff));
-			if(!strncmp(":exit", buff, )){
+			if(!strncmp("Bye!", buff, 4)){
 				break;
 			}
 		}
