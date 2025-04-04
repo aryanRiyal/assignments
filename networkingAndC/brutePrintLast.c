@@ -57,7 +57,7 @@ char ** lastnumlines(FILE * inputfp, int num){
 
 
 int main(int argc, char *argv[]) {
-	FILE * inputfp = fopen("input.txt", "r");
+	FILE * inputfp = fopen("dummyInput.txt", "r");
 
 	int num=0;
 

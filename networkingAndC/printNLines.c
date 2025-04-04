@@ -49,7 +49,7 @@ void firstnumlines(FILE * inputfp, unsigned int num){
 
 
 int main(void) {
-	FILE * inputfp = fopen("input.txt", "r");
+	FILE * inputfp = fopen("dummyInput.txt", "r");
 
 	int num;
 	scanf("%d",&num);
