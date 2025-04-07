@@ -1,0 +1,14 @@
+Internship Interview Assignment By WebTree Global Private Limited
+
+ Create a new React app using create-react-app.
+
+Call this API: 
+https://randomuser.me/api/?page=1&results=1&seed=abc
+
+Display the result on Screen in a Card of this design (As attached): 
+https://interview-india.s3.ap-south-1.amazonaws.com/Assignments/Display_Profile.jpg
+
+CSS: Use proper CSS to display the above user profile in a reasonably good-looking format. Use Tailwind CSS if possible.
+
+The better your CSS and overall design, the higher your priority in the interview queue.
+Note: The project must contain a valid package.json file.
